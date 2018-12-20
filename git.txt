@@ -1,0 +1,9 @@
+修正終わったらやること
+git add ./
+git commit -m ""<-コメントを書く
+git push origin <ブランチ名>
+
+ほかが修正されたらやること
+git checkout master
+git pull --rebase origin master
+git rebase master <ブランチ名>
