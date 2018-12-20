@@ -1,0 +1,2 @@
+# minesweeper
+Javaでなんかいい感じのminesweeperを作る
