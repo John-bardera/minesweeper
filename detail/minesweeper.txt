@@ -1,0 +1,15 @@
+カラフルマイン決定
+
+仕様
+* Stage5で30秒間
+* あらかじめ
+
+R,G,B　3色
+
+Class(COM vs Player)
+出題する
+操作
+判定
++
+(COM vs COM)
+Algo
