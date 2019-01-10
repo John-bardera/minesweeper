@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class test{
 	public static void main(String args[]){
 	mineTable table = new mineTable(3, 3, new int[][] {{1, 0, 0}, {10, 0, 0}, {5, 0, 0}, {10, 0, 0}, {3, 0, 0}, {10, 0, 0}, {2, 0, 0}, {10, 0, 0}, {9, 0, 0}});
@@ -7,6 +9,7 @@ public class test{
 class mineTable{
 	int verticle, width;
 	int[][][] table;
+	ArrayList<Intege[]r> has_number_point = new ArrayList<>();
 	mineTable(int verticle, int width, int[][] cells){
 		// cell[0]は周りに何個置くか
 		// 0 ~ 11
@@ -33,6 +36,8 @@ class mineTable{
 		for(int i = 0; i < verticle; i++){
 			table[i] = new int[width][];
 			for(int j = 0; j < width; j++)
+				if(cells[i * width + j][0] < 10)
+					this.has_number_point.add(new Integer[] {i, j});
 				table[i][j] = new int[] {cells[i * width + j][0], cells[i * width + j][1], cells[i * width + j][2]};
 		}
 	}
