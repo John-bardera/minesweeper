@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.lang.Thread;
 
 class MineSweeper extends JFrame implements ActionListener{
   int num = 5; // 1辺
@@ -9,24 +10,40 @@ class MineSweeper extends JFrame implements ActionListener{
   int btn_len = 60;
   int btn;
   JButton button[] = new JButton[all_num];
+  JButton decide = new JButton("決定");
+  JLabel time = new JLabel();
   JPanel p = new JPanel();
   ArrayList<Color> color = new ArrayList<Color>(Arrays.asList(Color.LIGHT_GRAY, Color.RED, Color.GREEN, Color.BLUE));
 
   public static void main(String args[]){
     MineSweeper frame = new MineSweeper("MineSweeper");
     frame.setVisible(true);
-
+    for(int i = 60;i > 0;i--){
+      frame.getTime(i);
+    }
   }
 
   MineSweeper(String title){
 
     setTitle(title);
     setLocationRelativeTo(null);
-    setSize(num*btn_len+10, num*btn_len+30);
+    setSize(num*btn_len, num*btn_len+65);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     DrawButton(num, all_num, btn_len);
     getContentPane().add(p, BorderLayout.CENTER);
+    getContentPane().add(decide, BorderLayout.SOUTH);
+  }
+
+  void getTime(int i){
+    time.setHorizontalAlignment(JLabel.CENTER);
+    time.setText("残り : "+String.valueOf(i)+"秒");
+    getContentPane().add(time, BorderLayout.NORTH);
+    try{
+      Thread.sleep(1000);
+    }catch(InterruptedException e){
+      e.printStackTrace();
+    }
   }
 
   void DrawButton(int x,int y,int z){
