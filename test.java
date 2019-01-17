@@ -3,13 +3,14 @@ import java.util.ArrayList;
 public class test{
 	public static void main(String args[]){
 	mineTable table = new mineTable(3, 3, new int[][] {{1, 0, 0}, {10, 0, 0}, {5, 0, 0}, {10, 0, 0}, {3, 0, 0}, {10, 0, 0}, {2, 0, 0}, {10, 0, 0}, {9, 0, 0}});
-	table.display();
+	table.displayTable();
+	table.surround(0, 0);
 	}
 }
 class mineTable{
 	int verticle, width;
 	int[][][] table;
-	ArrayList<Intege[]r> has_number_point = new ArrayList<>();
+	ArrayList<Integer[]> hasNumberPoints = new ArrayList<>();
 	mineTable(int verticle, int width, int[][] cells){
 		// cell[0]は周りに何個置くか
 		// 0 ~ 11
@@ -32,18 +33,25 @@ class mineTable{
 		// 3: 青色
 		this.verticle = verticle;
 		this.width = width;
-		this.table = new int[verticle][][];
-		for(int i = 0; i < verticle; i++){
-			table[i] = new int[width][];
-			for(int j = 0; j < width; j++)
-				if(cells[i * width + j][0] < 10)
-					this.has_number_point.add(new Integer[] {i, j});
-				table[i][j] = new int[] {cells[i * width + j][0], cells[i * width + j][1], cells[i * width + j][2]};
+		this.table = new int[verticle + 2][][];
+		for(int i = 0; i < verticle + 2; i++){
+			table[i] = new int[width + 2][];
+			for(int j = 0; j < width + 2; j++){
+				if(i == 0 || i == verticle + 1 || j == 0 || j == width + 1){
+					table[i][j] = new int[] {11, 0, 0};
+					continue;
+				}
+				else{
+					if(cells[(i - 1) * width + (j - 1)][0] < 10)
+						this.hasNumberPoints.add(new Integer[] {i, j});
+					table[i][j] = new int[] {cells[(i - 1) * width + (j - 1)][0], cells[(i - 1) * width + (j - 1)][1], cells[(i - 1) * width + (j - 1)][2]};
+				}
+			}
 		}
 	}
-	void display(){
-		for(int i = 0; i < this.verticle; i++){
-			for(int j = 0; j < this.width; j++){
+	void displayTable(){
+		for(int i = 0; i < this.verticle + 2; i++){
+			for(int j = 0; j < this.width + 2; j++){
 				if(table[i][j][0] == 10)
 					System.out.print("〼");
 				else if(table[i][j][0] == 11)
@@ -54,7 +62,12 @@ class mineTable{
 			System.out.println();
 		}
 	}
-	int surround(int i, j){
-		
+	boolean surround(int i, int j){
+		for(Integer[] tarCell: hasNumberPoints){
+			for(int status: table[tarCell[0]][tarCell[1]])
+				System.out.print(status);
+			System.out.println();
+		}
+		return true;
 	}
 }
