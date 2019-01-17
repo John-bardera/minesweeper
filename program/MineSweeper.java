@@ -18,9 +18,10 @@ class MineSweeper extends JFrame implements ActionListener{
   public static void main(String args[]){
     MineSweeper frame = new MineSweeper("MineSweeper");
     frame.setVisible(true);
-    for(int i = 60;i > 0;i--){
+    for(int i = 3;i > 0;i--){
       frame.getTime(i);
     }
+    new Finish(frame);
   }
 
   MineSweeper(String title){
@@ -45,6 +46,7 @@ class MineSweeper extends JFrame implements ActionListener{
       e.printStackTrace();
     }
   }
+
 
   void DrawButton(int x,int y,int z){
     p.setLayout(null);
