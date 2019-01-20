@@ -54,7 +54,7 @@ class MineSweeper extends JFrame implements ActionListener{
     for(int i = 0;i < all_num;i++){
       btn = i;
 
-      button[btn] = new JButton();
+      button[btn] = new JButton("2");
       button[btn].setBackground(color.get(0));
       button[btn].setBounds((i%5)*z, (i/5)*z, z, z);
       button[btn].addActionListener(this);
