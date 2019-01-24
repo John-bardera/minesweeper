@@ -2,15 +2,16 @@ import java.util.ArrayList;
 
 public class test{
 	public static void main(String args[]){
-	mineTable table = new mineTable(3, 3, new int[][] {{1, 0}, {10, 0}, {5, 0}, {10, 0}, {3, 0}, {10, 0}, {2, 0}, {10, 0}, {9, 0}});
+	mineTable table = new mineTable(3, 3, new int[][] {{4, 0}, {10, 0}, {10, 0}, {10, 0}, {10, 0}, {10, 0}, {10, 0}, {10, 0}, {10, 0}});
 	table.displayTable();
-	table.surround(0, 0);
+	System.out.println(table.surround());
 	}
 }
 class mineTable{
 	int verticle, width;
 	int[][][] table;
 	ArrayList<Integer[]> hasNumberPoints = new ArrayList<>();
+	int[][] surroundConfirmationTable = new int[][] {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 0}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
 	mineTable(int verticle, int width, int[][] cells){
 		// cell[0]は周りに何個置くか
 		// 0 ~ 11
@@ -20,6 +21,7 @@ class mineTable{
 		// cell[1]は指定されている色
 		// 固定値
 		// cell[0]が10,11の時は0(無色)
+		// 10,11以外の場合は1~3が入る
 		// 0: 無色
 		// 1: 赤色
 		// 2: 緑色
@@ -62,12 +64,24 @@ class mineTable{
 			System.out.println();
 		}
 	}
-	boolean surround(int i, int j){
-		for(Integer[] tarCell: hasNumberPoints){
-			for(int status: table[tarCell[0]][tarCell[1]])
-				System.out.print(status);
-			System.out.println();
+	boolean surround(){
+		int clearedCount = 0;
+		for(Integer[] tarCell: this.hasNumberPoints){
+			int[] cellStatus = this.table[tarCell[0]][tarCell[1]];
+			int markedCount = 0;
+			int markNumber = cellStatus[0];
+			int markColor = cellStatus[1];
+			for(int[] confirmCell: this.surroundConfirmationTable){
+				if(this.table[confirmCell[0] + tarCell[0]][confirmCell[1] + tarCell[1]][0] == 11)
+					continue;
+				else if(markColor == this.table[confirmCell[0] + tarCell[0]][confirmCell[1] + tarCell[1]][2])
+					markedCount++;
+			}
+			if(markedCount == markNumber)
+				clearedCount++;
 		}
-		return true;
+		if(clearedCount == this.hasNumberPoints.size())
+			return true;
+		return false;
 	}
 }
