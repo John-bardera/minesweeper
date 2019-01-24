@@ -37,6 +37,8 @@ class Draw extends JFrame implements ActionListener{
     int btn = -1;
     p.setLayout(null);
 
+    decide.addActionListener(this);
+    decide.setActionCommand("decide");
     for(int i = 0; i < minetable.table[0].length;i++){ // 縦
       for(int j = 0;j < minetable.table[1].length;j++){ // 横
         if(minetable.table[i][j][0] != 11){ // 表示タイル
@@ -71,18 +73,29 @@ class Draw extends JFrame implements ActionListener{
   public void actionPerformed(ActionEvent e){
     String cmd;
     cmd = e.getActionCommand();
+    decide.setForeground(Color.BLACK);
+
+    if(cmd.equals("decide")){
+      if(minetable.surround()){
+        new Popup(this, true);
+      }else{
+        decide.setForeground(color.get(1));
+      }
+    }
     for(int i = 0;i < all_sides_num;i++){
       if(cmd.equals("a"+i)){
         int color_num = color.indexOf(button[i].getBackground());
-        if(color.get((color_num+1)%4) == button[i].getForeground()){
+        int next_color = (color_num+1)%4;
+        if(color.get(next_color) == button[i].getForeground()){
           button[i].setForeground(color.get(4));
-          button[i].setBackground(color.get((color_num+1)%4));
+          button[i].setBackground(color.get(next_color));
         }else if(color.get(4) == button[i].getForeground()){
           button[i].setForeground(button[i].getBackground());
-          button[i].setBackground(color.get((color_num+1)%4));
+          button[i].setBackground(color.get(next_color));
         }else{
-          button[i].setBackground(color.get((color_num+1)%4));
+          button[i].setBackground(color.get(next_color));
         }
+        minetable.table[(i/sides)+1][(i%sides)+1][2] = next_color;        
       }
     }
   }

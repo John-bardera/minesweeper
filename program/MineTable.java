@@ -4,6 +4,7 @@ class MineTable{
   int verticle, width;
   int[][][] table;
   ArrayList<Integer[]> hasNumberPoints = new ArrayList<>();
+  int[][] surroundConfirmationTable = new int[][] {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 0}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};;
 
   MineTable(int verticle, int width, int[][] cells){
     // cell[0]は周りに何個置くか
@@ -28,6 +29,7 @@ class MineTable{
     this.verticle = verticle;
     this.width = width;
     this.table = new int[verticle + 2][][];
+
     for(int i = 0; i < verticle + 2; i++){
       table[i] = new int[width + 2][];
       for(int j = 0; j < width + 2; j++){
@@ -43,26 +45,25 @@ class MineTable{
       }
     }
   }
-  void display(){
-    for(int i = 0; i < this.verticle; i++){
-      for(int j = 0; j < this.width; j++){
-        if(table[i][j][0] == 10)
-          System.out.print("〼");
-        else if(table[i][j][0] == 11)
-          System.out.print("  ");
-        else
-          System.out.print(table[i][j][0] + " ");
-      }
-      System.out.println();
-    }
-  }
 
-  boolean surround(int i, int j){
-    for(Integer[] tarCell: hasNumberPoints){
-      for(int status: table[tarCell[0]][tarCell[1]])
-        System.out.print(status);
-      System.out.println();
+  boolean surround(){
+    int clearedCount = 0;
+    for(Integer[] tarCell: this.hasNumberPoints){
+      int[] cellStatus = this.table[tarCell[0]][tarCell[1]];
+      int markedCount = 0;
+      int markNumber = cellStatus[0];
+      int markColor = cellStatus[1];
+      for(int[] confirmCell: this.surroundConfirmationTable){
+        if(this.table[confirmCell[0] + tarCell[0]][confirmCell[1] + tarCell[1]][0] == 11)
+          continue;
+        else if(markColor == this.table[confirmCell[0] + tarCell[0]][confirmCell[1] + tarCell[1]][2])
+          markedCount++;
+      }
+      if(markedCount == markNumber)
+        clearedCount++;
     }
-    return true;
+    if(clearedCount == this.hasNumberPoints.size())
+      return true;
+    return false;
   }
 }

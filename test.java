@@ -11,7 +11,7 @@ class mineTable{
 	int verticle, width;
 	int[][][] table;
 	ArrayList<Integer[]> hasNumberPoints = new ArrayList<>();
-	int[][] surroundConfirmationTable = new int[][] {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 0}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+	int[][] surroundConfirmationTable;
 	mineTable(int verticle, int width, int[][] cells){
 		// cell[0]は周りに何個置くか
 		// 0 ~ 11
@@ -36,6 +36,24 @@ class mineTable{
 		this.verticle = verticle;
 		this.width = width;
 		this.table = new int[verticle + 2][][];
+    this.surroundConfirmationTable = new int[verticle*width][2];
+    for(int i = 0;i < verticle*width;i++){
+      if((i/verticle) == 0){
+        surroundConfirmationTable[i][0] = -1;
+      }else if((i/verticle) == (verticle-1)){
+        surroundConfirmationTable[i][0] = 1;
+      }else{
+        surroundConfirmationTable[i][0] = 0;
+      }
+      if(i%width == 0){
+        surroundConfirmationTable[i][1] = -1;
+      }else if((i%width) ==  (width-1)){
+        surroundConfirmationTable[i][1] = 1;
+      }else{
+        surroundConfirmationTable[i][1] = 0;
+      }
+    }
+
 		for(int i = 0; i < verticle + 2; i++){
 			table[i] = new int[width + 2][];
 			for(int j = 0; j < width + 2; j++){
