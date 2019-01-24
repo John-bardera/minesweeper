@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class test{
 	public static void main(String args[]){
-	mineTable table = new mineTable(3, 3, new int[][] {{1, 0, 0}, {10, 0, 0}, {5, 0, 0}, {10, 0, 0}, {3, 0, 0}, {10, 0, 0}, {2, 0, 0}, {10, 0, 0}, {9, 0, 0}});
+	mineTable table = new mineTable(3, 3, new int[][] {{1, 0}, {10, 0}, {5, 0}, {10, 0}, {3, 0}, {10, 0}, {2, 0}, {10, 0}, {9, 0}});
 	table.displayTable();
 	table.surround(0, 0);
 	}
@@ -44,7 +44,7 @@ class mineTable{
 				else{
 					if(cells[(i - 1) * width + (j - 1)][0] < 10)
 						this.hasNumberPoints.add(new Integer[] {i, j});
-					table[i][j] = new int[] {cells[(i - 1) * width + (j - 1)][0], cells[(i - 1) * width + (j - 1)][1], cells[(i - 1) * width + (j - 1)][2]};
+					table[i][j] = new int[] {cells[(i - 1) * width + (j - 1)][0], cells[(i - 1) * width + (j - 1)][1], 0};
 				}
 			}
 		}
