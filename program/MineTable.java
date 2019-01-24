@@ -1,6 +1,10 @@
+import java.util.*;
+
 class MineTable{
   int verticle, width;
   int[][][] table;
+  ArrayList<Integer[]> hasNumberPoints = new ArrayList<>();
+
   MineTable(int verticle, int width, int[][] cells){
     // cell[0]は周りに何個置くか
     // 0 ~ 11
@@ -23,11 +27,20 @@ class MineTable{
     // 3: 青色
     this.verticle = verticle;
     this.width = width;
-    this.table = new int[verticle][][];
-    for(int i = 0; i < verticle; i++){
-      table[i] = new int[width][];
-      for(int j = 0; j < width; j++)
-        table[i][j] = new int[] {cells[i * width + j][0], cells[i * width + j][1], cells[i * width + j][2]};
+    this.table = new int[verticle + 2][][];
+    for(int i = 0; i < verticle + 2; i++){
+      table[i] = new int[width + 2][];
+      for(int j = 0; j < width + 2; j++){
+        if(i == 0 || i == verticle + 1 || j == 0 || j == width + 1){
+          table[i][j] = new int[] {11, 0, 0};
+          continue;
+        }
+        else{
+          if(cells[(i - 1) * width + (j - 1)][0] < 10)
+            this.hasNumberPoints.add(new Integer[] {i, j});
+          table[i][j] = new int[] {cells[(i - 1) * width + (j - 1)][0], cells[(i - 1) * width + (j - 1)][1], 0};
+        }
+      }
     }
   }
   void display(){
@@ -43,7 +56,13 @@ class MineTable{
       System.out.println();
     }
   }
-  int surround(int i, j){
-    
+
+  boolean surround(int i, int j){
+    for(Integer[] tarCell: hasNumberPoints){
+      for(int status: table[tarCell[0]][tarCell[1]])
+        System.out.print(status);
+      System.out.println();
+    }
+    return true;
   }
 }

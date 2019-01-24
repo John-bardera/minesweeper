@@ -5,6 +5,7 @@ import java.util.*;
 import java.lang.Thread;
 
 class MineSweeper extends JFrame implements ActionListener{
+  static Draw draw;
   int num = 5; // 1辺
   int all_num = num*num;
   int btn_len = 60;
@@ -16,24 +17,17 @@ class MineSweeper extends JFrame implements ActionListener{
   ArrayList<Color> color = new ArrayList<Color>(Arrays.asList(Color.LIGHT_GRAY, Color.RED, Color.GREEN, Color.BLUE));
 
   public static void main(String args[]){
-    MineSweeper frame = new MineSweeper("MineSweeper");
-    frame.setVisible(true);
+    MineSweeper frame = new MineSweeper();
+    frame.setMineSweeper("Minesweeper", 0); //Math.random()*3)
     for(int i = 60;i > 0;i--){
-      frame.getTime(i);
+      draw.getTime(i);
     }
-    new Finish(frame);
+    new Finish(draw);
   }
 
-  MineSweeper(String title){
-
-    setTitle(title);
-    setLocationRelativeTo(null);
-    setSize(num*btn_len, num*btn_len+65);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    DrawButton(num, all_num, btn_len);
-    getContentPane().add(p, BorderLayout.CENTER);
-    getContentPane().add(decide, BorderLayout.SOUTH);
+  void setMineSweeper(String title, int level){
+    Problem problem = new Problem(level);
+    draw = new Draw(title, problem.minetable);
   }
 
   void getTime(int i){
