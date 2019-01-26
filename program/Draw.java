@@ -7,8 +7,9 @@ import java.lang.Thread;
 class Draw extends JFrame implements ActionListener{
   MineTable minetable;
   int sides; // 辺の数
+  int length = 500;
   int all_sides_num;
-  int btn_len = 60;
+  int btn_len;
   JButton[] button;
   JButton decide = new JButton("決定");
   JLabel time = new JLabel();
@@ -21,10 +22,11 @@ class Draw extends JFrame implements ActionListener{
     sides = table.verticle;
     all_sides_num = sides*sides;
     button = new JButton[all_sides_num];
+    btn_len = length/sides;
 
     setTitle(title);
     setLocationRelativeTo(null);
-    setSize(sides*btn_len, sides*btn_len+65);
+    setSize(length, length+65);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     DrawButton(sides, all_sides_num, btn_len);
@@ -45,6 +47,7 @@ class Draw extends JFrame implements ActionListener{
           btn += 1;
           if(minetable.table[i][j][0] != 10){
             button[btn] = new JButton(String.valueOf(minetable.table[i][j][0]));
+            button[btn].setFont(new Font("MS ゴシック", Font.BOLD, (100/x)));
             button[btn].setForeground(color.get(minetable.table[i][j][1]));
           }else{
             button[btn] = new JButton();

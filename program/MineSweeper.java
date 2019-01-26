@@ -3,6 +3,7 @@ public class MineSweeper{
 
   public static void main(String args[]){
     MineSweeper frame = new MineSweeper();
+    // Window window = new Window("MineSweeper");
     frame.setMineSweeper("Minesweeper", 0); //Math.random()*3)
     for(int i = 60;i >= 0;i--){
       draw.getTime(i);
