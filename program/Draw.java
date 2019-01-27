@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-import java.lang.Thread;
+import java.util.Timer;
 
 class Draw extends JFrame implements ActionListener{
   MineTable minetable;
@@ -15,27 +15,28 @@ class Draw extends JFrame implements ActionListener{
   JLabel time = new JLabel();
   JPanel p = new JPanel();
   ArrayList<Color> color = new ArrayList<Color>(Arrays.asList(Color.LIGHT_GRAY, Color.RED, Color.GREEN, Color.BLUE, Color.WHITE));
-  
+  Timer timer;
 
-  Draw(String title, MineTable table){
+  Draw(int x, int y, Timer t, MineTable table){
     minetable = table;
     sides = table.verticle;
     all_sides_num = sides*sides;
     button = new JButton[all_sides_num];
     btn_len = length/sides;
+    timer = t;
 
-    setTitle(title);
-    setLocationRelativeTo(null);
+    setTitle("Minesweeper");
+    setLocation(x, y);
     setSize(length, length+65);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    DrawButton(sides, all_sides_num, btn_len);
+    drawButton(sides, all_sides_num, btn_len);
     getContentPane().add(p, BorderLayout.CENTER);
     getContentPane().add(decide, BorderLayout.SOUTH);
     setVisible(true);
   }
 
-  void DrawButton(int x,int y,int z){
+  void drawButton(int x,int y,int z){
     int btn = -1;
     p.setLayout(null);
 
@@ -62,15 +63,10 @@ class Draw extends JFrame implements ActionListener{
     }
   }
 
-  void getTime(int i){
+  void drawTime(int timer){
     time.setHorizontalAlignment(JLabel.CENTER);
-    time.setText("残り : "+String.valueOf(i)+"秒");
+    time.setText("残り : "+String.valueOf(timer)+"秒");
     getContentPane().add(time, BorderLayout.NORTH);
-    try{
-      Thread.sleep(1000);
-    }catch(InterruptedException e){
-      e.printStackTrace();
-    }
   }
 
   public void actionPerformed(ActionEvent e){
@@ -80,6 +76,7 @@ class Draw extends JFrame implements ActionListener{
 
     if(cmd.equals("decide")){
       if(minetable.surround()){
+        timer.cancel();
         new Popup(this, true);
       }else{
         decide.setForeground(color.get(1));

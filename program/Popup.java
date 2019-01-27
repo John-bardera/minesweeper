@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Popup extends JDialog implements ActionListener{
+public class Popup extends JDialog implements ActionListener{  
   Popup(JFrame frame, Boolean bool){
     super(frame);
     getContentPane().setLayout(new FlowLayout());
@@ -10,6 +10,8 @@ public class Popup extends JDialog implements ActionListener{
     int x = frame.getX()+(frame.getWidth()-200)/2;
     int y = frame.getY()+(frame.getHeight()-150)/2;
     setModal(true);
+    frame.setEnabled(true);
+    setUndecorated(true);
 
     if(bool){
       nextLevel();
