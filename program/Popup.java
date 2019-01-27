@@ -2,20 +2,41 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Popup extends JDialog implements ActionListener{
-  Popup(JFrame frame, Boolean bool){
+public class Popup extends JDialog implements ActionListener{  
+  int level;
+  JFrame frame;
+
+  Popup(JFrame frame){
     super(frame);
+    this.frame = frame;
     getContentPane().setLayout(new FlowLayout());
     Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
     int x = frame.getX()+(frame.getWidth()-200)/2;
     int y = frame.getY()+(frame.getHeight()-150)/2;
     setModal(true);
+    frame.setEnabled(true);
+    setUndecorated(true);
 
-    if(bool){
-      nextLevel();
-    }else{
-      finish();
-    }
+    finish();
+    setSize(200, 150);
+    setLocation(x,y);
+    setVisible(true);
+  }
+
+  Popup(JFrame frame, int level){
+    super(frame);
+    this.level = level;
+    this.frame = frame;
+    getContentPane().setLayout(new FlowLayout());
+    Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+    int x = frame.getX()+(frame.getWidth()-200)/2;
+    int y = frame.getY()+(frame.getHeight()-150)/2;
+    setModal(true);
+    frame.setEnabled(true);
+    setUndecorated(true);
+
+
+    nextLevel();
     setSize(200, 150);
     setLocation(x,y);
     setVisible(true);
@@ -43,10 +64,19 @@ public class Popup extends JDialog implements ActionListener{
 
   public void actionPerformed(ActionEvent e){
     String cmd;
+    int x = frame.getX();
+    int y = frame.getY();
     setVisible(true);
     cmd = e.getActionCommand();
     if(cmd.equals("finish")){
-      setVisible(false);
+      frame.setVisible(false);
+      Start start = new Start();
+      start.gameStart(x, y);
+    }
+    if(cmd.equals("next")){
+      frame.setVisible(false);
+      Problem problem = new Problem(level+1);
+      problem.start(x, y);
     }
   }
 }
