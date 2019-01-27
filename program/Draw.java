@@ -10,6 +10,7 @@ class Draw extends JFrame implements ActionListener{
   int length = 500;
   int all_sides_num;
   int btn_len;
+  int level;
   JButton[] button;
   JButton decide = new JButton("決定");
   JLabel time = new JLabel();
@@ -17,13 +18,14 @@ class Draw extends JFrame implements ActionListener{
   ArrayList<Color> color = new ArrayList<Color>(Arrays.asList(Color.LIGHT_GRAY, Color.RED, Color.GREEN, Color.BLUE, Color.WHITE));
   Timer timer;
 
-  Draw(int x, int y, Timer t, MineTable table){
+  Draw(int x, int y, Timer t, int level, MineTable table){
     minetable = table;
     sides = table.verticle;
     all_sides_num = sides*sides;
     button = new JButton[all_sides_num];
     btn_len = length/sides;
     timer = t;
+    this.level = level;
 
     setTitle("Minesweeper");
     setLocation(x, y);
@@ -77,7 +79,7 @@ class Draw extends JFrame implements ActionListener{
     if(cmd.equals("decide")){
       if(minetable.surround()){
         timer.cancel();
-        new Popup(this, true);
+        new Popup(this, true, level);
       }else{
         decide.setForeground(color.get(1));
       }

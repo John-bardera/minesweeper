@@ -7,6 +7,7 @@ public class Start extends JLayeredPane implements ActionListener{
   Problem problem;
 
   Start(){
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setLayout(null);
     ImageIcon icon = new ImageIcon("./akashi.png");
     JLabel label = new JLabel(icon);
@@ -26,6 +27,14 @@ public class Start extends JLayeredPane implements ActionListener{
   void gameStart(){
     frame.add(this);
     frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+    frame.setSize(500, 530);
+    frame.setTitle("Minesweeper");
+  }
+
+  void gameStart(int x, int y){
+    frame.add(this);
+    frame.setLocation(x, y);
     frame.setVisible(true);
     frame.setSize(500, 530);
     frame.setTitle("Minesweeper");

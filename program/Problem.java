@@ -10,17 +10,19 @@ public class Problem{
   Draw draw;
   int limit = 60;
   Timer t = new Timer();
+  int level;
   
   Problem(int level){
     setLevel(level);
   }
 
   void setLevel(int level){
+    this.level = level;
     minetable = table.getTable(level); 
   }
 
   void start(int x, int y){
-    draw = new Draw(x, y, t, this.minetable);
+    draw = new Draw(x, y, t, level, this.minetable);
     t.schedule(new TimerDrawTask(), 0, 1000);
   }
 
@@ -32,6 +34,7 @@ public class Problem{
       draw.drawTime(limit);
       if(limit == 0){
         t.cancel();
+        new Popup(draw, false);
       }
     }
   }
