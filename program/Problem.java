@@ -34,7 +34,7 @@ public class Problem{
       draw.drawTime(limit);
       if(limit == 0){
         t.cancel();
-        new Popup(draw, false);
+        new Popup(draw);
       }
     }
   }

@@ -6,7 +6,7 @@ public class Popup extends JDialog implements ActionListener{
   int level;
   JFrame frame;
 
-  Popup(JFrame frame, Boolean bool){
+  Popup(JFrame frame){
     super(frame);
     this.frame = frame;
     getContentPane().setLayout(new FlowLayout());
@@ -23,7 +23,7 @@ public class Popup extends JDialog implements ActionListener{
     setVisible(true);
   }
 
-  Popup(JFrame frame, Boolean bool,int level){
+  Popup(JFrame frame, int level){
     super(frame);
     this.level = level;
     this.frame = frame;

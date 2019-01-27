@@ -79,7 +79,7 @@ class Draw extends JFrame implements ActionListener{
     if(cmd.equals("decide")){
       if(minetable.surround()){
         timer.cancel();
-        new Popup(this, true, level);
+        new Popup(this, level);
       }else{
         decide.setForeground(color.get(1));
       }
