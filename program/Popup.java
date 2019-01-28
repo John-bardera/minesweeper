@@ -34,7 +34,7 @@ public class Popup extends JDialog implements ActionListener{
     setModal(true);
     frame.setEnabled(true);
 
-    if(level < 0){
+    if(level < 3){
       nextLevel();
       setSize(200, 150);
       setLocation(x,y);
@@ -58,10 +58,11 @@ public class Popup extends JDialog implements ActionListener{
     button.setAlignmentX(0.5f);
     label.setAlignmentX(0.5f);
     p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-
+    p.setBackground(Color.WHITE);
     p.add(label);
     p.add(button);
     getContentPane().add(p, BorderLayout.CENTER);  
+    getContentPane().setBackground(Color.WHITE);
   }
 
   public void nextLevel(){
